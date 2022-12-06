@@ -4,13 +4,13 @@ from ting_file_management.file_management import txt_importer
 
 def process(path_file, instance):
     list = txt_importer(path_file)
-    repeated = False
+    repeat = False
 
     for data in instance.__str__():
         if data['nome_do_arquivo'] == path_file:
-            repeated = True
+            repeat = True
 
-    if not repeated:
+    if not repeat:
         dict = {
             'nome_do_arquivo': path_file,
             'qtd_linhas': len(list),
@@ -18,12 +18,16 @@ def process(path_file, instance):
         }
 
         instance.enqueue(dict)
-        print(str(dict))
-        sys.stderr.write(str(dict))
+        sys.stdout.write(str(dict))
 
 
 def remove(instance):
-    """Aqui irá sua implementação"""
+    if len(instance.__str__()) <= 0:
+        print('Não há elementos')
+        return 0
+
+    path_file = instance.dequeue()['nome_do_arquivo']
+    print(f'Arquivo {path_file} removido com sucesso')
 
 
 def file_metadata(instance, position):
